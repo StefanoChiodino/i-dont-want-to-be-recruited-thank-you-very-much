@@ -18,8 +18,8 @@
 		<content></content>
 		<apps:property name='from' value='{{ entry.from }}'/>
 		<apps:property name='label' value='Recruitment'/>
-		<apps:property name='sizeOperator' value='s_sl'/>
-		<apps:property name='sizeUnit' value='s_smb'/>
+        <!-- Skip the inbox -->
+		<apps:property name='shouldArchive' value='true'/>
 	</entry>
     {% endfor %}
 </feed>

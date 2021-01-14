@@ -8,6 +8,7 @@ from typing import List, Dict, Callable, Any
 
 # https://regex101.com/r/sbHlJ5/2.
 from jinja2 import Template
+from setuptools._vendor.ordered_set import OrderedSet
 
 _DOMAIN_REGEX = r"^[^:\/@]+\.[^:\/@]+$"
 _FILE_PATH = "domains.txt"
@@ -32,8 +33,8 @@ def _get_all_domains() -> List[str]:
 def add(domain: str):
     domains: List[str] = _get_all_domains()
     domains.append(domain + os.linesep)
-    domains.sort()
-    unique_domains = set(domains)
+    domains.sort(key=lambda x: x.lower())
+    unique_domains = OrderedSet(domains)
     print(unique_domains)
     with open(_FILE_PATH, "w") as file:
         file.writelines(unique_domains)
