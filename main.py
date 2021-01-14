@@ -25,7 +25,7 @@ def argparser_domain_type(arg_value: str, pat: Pattern = re.compile(_DOMAIN_REGE
 def _get_all_domains() -> List[str]:
     try:
         with open(_FILE_PATH, "r") as file:
-            return file.readlines()
+            return file.read().splitlines()
     except FileNotFoundError:
         return []
 
@@ -96,8 +96,6 @@ def _parse_args(args: List[str]) -> argparse.Namespace:
 
 if __name__ == '__main__':
     args = _parse_args(sys.argv[1:])
-    # sourcecoders.io
-    print(args)
 
     if args.action == "add":
         add(args.domain)
