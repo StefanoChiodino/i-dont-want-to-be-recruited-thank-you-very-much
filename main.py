@@ -47,11 +47,13 @@ def remove(domain: str):
         file.writelines(domains)
 
 
-def export() -> None:
+def export(as_at: datetime = None) -> None:
     domains: List[str] = _get_all_domains()
+    if as_at is None:
+        as_at = datetime.now()
     filter: Dict[str, Any] = {
         "title": "I don't want to be recruited thanks",
-        "updated": datetime.now(),
+        "updated": as_at,
         "author": {
             "name": "I don't want to be recruited thanks",
             "email": ""
@@ -59,7 +61,7 @@ def export() -> None:
         "entries": [
             {
                 "title": "I don't want to be recruited thanks",
-                "updated": datetime.now(),
+                "updated": as_at,
                 "from": " OR ".join(domains)
             }
         ]
