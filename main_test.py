@@ -84,3 +84,5 @@ class TestAdd:
         """
         main.export(datetime(2020, 1, 1))
         assert open_mock.return_value.__enter__.return_value.write.call_count == 1
+        assert "<apps:property name='from' value='@domain.com OR @email.domain.com'/>" in \
+               open_mock.return_value.__enter__.return_value.write.call_args_list[0][0][0]

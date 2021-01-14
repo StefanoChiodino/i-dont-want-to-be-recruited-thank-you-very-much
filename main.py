@@ -62,7 +62,7 @@ def export(as_at: datetime = None) -> None:
             {
                 "title": "I don't want to be recruited thanks",
                 "updated": as_at,
-                "from": " OR ".join(domains)
+                "from": " OR ".join([f"@{x}" for x in domains])
             }
         ]
     }
