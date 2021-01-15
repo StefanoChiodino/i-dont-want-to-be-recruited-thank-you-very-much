@@ -12,16 +12,22 @@ Download the file [gmail_filter.xml](https://raw.githubusercontent.com/StefanoCh
 
 [Google support page on how to import a filter](https://support.google.com/mail/answer/6579?hl=en-GB#zippy=%2Cexport-or-import-filters)
 
-# How do I add to it?
+# How do I contribute to the list?
 
-## Requirements
+## Easy mode
+
+Open an issue on [github](https://github.com/StefanoChiodino/i-dont-want-to-be-recruited-thank-you-very-much/issues/new/choose).
+
+## DIY
+
+### Requirements
 
 - Python 3 installed
 - git installed
 - Understanding of how merge requests work
 - Optional understanding of virtual environments
 
-## Steps
+### Steps
 
 ```
 # install requirements, you may want to be in a virtual environment for this.
