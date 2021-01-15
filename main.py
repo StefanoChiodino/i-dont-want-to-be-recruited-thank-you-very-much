@@ -4,7 +4,7 @@ import re
 import sys
 from datetime import datetime
 from re import Pattern
-from typing import List, Dict, Callable, Any
+from typing import List, Dict, Callable, Any, Generic, TypeVar, Generator
 
 # https://regex101.com/r/sbHlJ5/2.
 from jinja2 import Template
@@ -48,10 +48,29 @@ def remove(domain: str):
         file.writelines(domains)
 
 
+X = TypeVar('X')
+
+
+def _chunk_list(domains: List[X], chunk_size: int = 70) -> Generator[List[X], None, None]:
+    """Yield successive n-sized chunks from lst."""
+    for i in range(0, len(domains), chunk_size):
+        yield domains[i:i + chunk_size]
+
+
 def export(as_at: datetime = None) -> None:
     domains: List[str] = _get_all_domains()
     if as_at is None:
         as_at = datetime.now()
+
+    def get_entries() -> Generator[Dict[str, Any], None, None]:
+        chunked_domains = _chunk_list(domains)
+        for chunk in chunked_domains:
+            yield {
+                "title": "I don't want to be recruited thanks",
+                "updated": as_at,
+                "from": " OR ".join([f"@{x}" for x in chunk])
+            }
+
     filter: Dict[str, Any] = {
         "title": "I don't want to be recruited thanks",
         "updated": as_at,
@@ -59,13 +78,7 @@ def export(as_at: datetime = None) -> None:
             "name": "I don't want to be recruited thanks",
             "email": ""
         },
-        "entries": [
-            {
-                "title": "I don't want to be recruited thanks",
-                "updated": as_at,
-                "from": " OR ".join([f"@{x}" for x in domains])
-            }
-        ]
+        "entries": get_entries()
     }
 
     with open(_GMAIL_FILTER_TEMPLATE_PATH, "r") as file:
