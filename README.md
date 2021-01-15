@@ -8,7 +8,7 @@ We have a list of Uk recruiters' domains, and an up to date xml file that can be
 
 # How do I use it?
 
-Download the file `gmail_filter.xml` and import it into gmail. Feel free to customise what each filter does.
+Download the file [gmail_filter.xml](https://raw.githubusercontent.com/StefanoChiodino/i-dont-want-to-be-recruited-thank-you-very-much/master/gmail_filter.xml) and import it into gmail. Feel free to customise what each filter does.
 
 [Google support page on how to import a filter](https://support.google.com/mail/answer/6579?hl=en-GB#zippy=%2Cexport-or-import-filters)
 
