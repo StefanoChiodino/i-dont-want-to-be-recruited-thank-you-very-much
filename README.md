@@ -1,6 +1,6 @@
 # I don't want to be recruited thank you very much
 
-This repository aims at catching recruiters communication. You can the mark it as spam, delete it, label it, or whatever else you prefer.
+This repository aims at catching recruiters communication. You can then mark it as spam, delete it, label it, or whatever else you prefer.
 
 # What does it do?
 
