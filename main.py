@@ -67,9 +67,10 @@ def export(as_at: datetime = None) -> None:
 
     def get_entries() -> Generator[Dict[str, Any], None, None]:
         chunked_domains = _chunk_list(domains)
-        for chunk in chunked_domains:
+        for i, chunk in enumerate(chunked_domains):
             yield {
-                "title": _TITLE,
+                "title": f"_TITLE {i}",
+                "id": f"i-dont-want-to-be-recruited-thank-you-very-much-{i}",
                 "updated": as_at,
                 "from": " OR ".join([f"@{x}" for x in chunk])
             }

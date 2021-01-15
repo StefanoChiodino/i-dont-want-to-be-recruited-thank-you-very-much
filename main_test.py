@@ -1,6 +1,7 @@
 import os
+import re
 from datetime import datetime, date
-from typing import List
+from typing import List, Optional, Match, AnyStr
 from unittest import TestCase, mock
 from unittest.mock import MagicMock
 
@@ -61,7 +62,7 @@ class TestAdd:
     def test_add_succesfully(self, open_mock: MagicMock, domains: str):
         for domain in domains:
             main.add(domain)
-        assert open_mock.return_value.__enter__.return_value.writelines.call_count == len(domains)
+        assert open_mock.return_value.__enter__.return_value.write.call_count == len(domains)
 
     @mock.patch("builtins.open")
     @mock.patch("main._get_all_domains")
@@ -101,6 +102,18 @@ class TestAdd:
         open_mock.return_value.__enter__.return_value.write.call_args_list[0][0][0]: str
         assert open_mock.return_value.__enter__.return_value.write.call_args_list[0][0][0].count(
             "<apps:property name='from'") == expected_chunks
+
+    @mock.patch("builtins.open")
+    @mock.patch("main._get_all_domains")
+    def test_export_uses_unique_ids_for_filters(self, _get_all_domains: MagicMock, open_mock: MagicMock):
+        _get_all_domains.return_value = [str(x) for x in range(70 * 3)]
+        open_mock.return_value.__enter__.return_value.read.return_value = TEMPLATE
+        main.export(datetime(2020, 1, 1))
+        output: str = open_mock.return_value.__enter__.return_value.write.call_args_list[0][0][0]
+        id_matches: List[str] = re.findall(r"<id>(.+)<\/id>", output)
+        ids: List[str] = [str(x) for x in id_matches]
+        unique_ids = set(ids)
+        assert len(ids) == len(unique_ids)
 
 
 class TestUtilities:
