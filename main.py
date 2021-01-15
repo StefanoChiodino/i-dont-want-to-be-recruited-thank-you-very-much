@@ -10,10 +10,11 @@ from typing import List, Dict, Callable, Any, Generic, TypeVar, Generator
 from jinja2 import Template
 from setuptools._vendor.ordered_set import OrderedSet
 
-_DOMAIN_REGEX = r"^[^:\/@]+\.[^:\/@]+$"
-_FILE_PATH = "domains.txt"
-_GMAIL_FILTER_TEMPLATE_PATH = "gmail_template.jinja2"
-_GMAIL_FILTER_PATH = "gmail_filter.xml"
+_DOMAIN_REGEX: str = r"^[^:\/@]+\.[^:\/@]+$"
+_FILE_PATH: str = "domains.txt"
+_GMAIL_FILTER_TEMPLATE_PATH: str = "gmail_template.jinja2"
+_GMAIL_FILTER_PATH: str = "gmail_filter.xml"
+_TITLE: str = "I don't want to be recruited thank you very much"
 
 
 def argparser_domain_type(arg_value: str, pat: Pattern = re.compile(_DOMAIN_REGEX)) -> str:
@@ -66,16 +67,16 @@ def export(as_at: datetime = None) -> None:
         chunked_domains = _chunk_list(domains)
         for chunk in chunked_domains:
             yield {
-                "title": "I don't want to be recruited thanks",
+                "title": _TITLE,
                 "updated": as_at,
                 "from": " OR ".join([f"@{x}" for x in chunk])
             }
 
     filter: Dict[str, Any] = {
-        "title": "I don't want to be recruited thanks",
+        "title": _TITLE,
         "updated": as_at,
         "author": {
-            "name": "I don't want to be recruited thanks",
+            "name": "Stefano Chiodino",
             "email": ""
         },
         "entries": get_entries()
