@@ -1,6 +1,12 @@
 # I don't want to be recruited thank you very much
 
-This repository aims at catching recruiters communication. You can then mark it as spam, delete it, label it, or whatever else you prefer.
+This repository aims at catching recruiters' communication. You can then mark it as spam, delete it, label it, or whatever else you prefer.
+
+## Features
+
+- The gmail filter is in the repo, click and go
+- Few basic command line tools to handle the list of domains
+- Filters can be imported multiple times in gmail without duplicates
 
 # What does it do?
 
