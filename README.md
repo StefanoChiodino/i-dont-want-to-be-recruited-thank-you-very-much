@@ -43,4 +43,10 @@ git push
 # Open a merge request.
 ```
 
+# Acknowledgments
 
+Initial list seeded from:
+
+- https://github.com/jasoncartwright/recruiterdomains
+- https://github.com/drcongo/spammy-recruiters
+- https://github.com/alexmbird/uk-it-recruiter-domains
