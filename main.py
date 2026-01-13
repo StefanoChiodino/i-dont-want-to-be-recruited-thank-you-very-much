@@ -1,10 +1,9 @@
 import argparse
-import os
 import re
 import sys
 from datetime import datetime
 from re import Pattern
-from typing import List, Dict, Any, TypeVar, Generator
+from typing import Dict, Any, Generator, List, Optional, TypeVar
 
 # https://regex101.com/r/sbHlJ5/2.
 from jinja2 import Template
@@ -31,25 +30,24 @@ def _get_all_domains() -> List[str]:
         return []
 
 
-def add(domain: str):
+def add(domain: str) -> None:
+    domain = domain.lower()
     domains: List[str] = _get_all_domains()
-    print(domains)
     domains.append(domain)
     # Dedupe.
     domains = list(set(domains))
     domains.sort(key=lambda x: x.lower())
 
-    print(domains)
     with open(_FILE_PATH, "w") as file:
-        file.write(os.linesep.join(domains))
+        file.write("\n".join(domains))
 
 
-def remove(domain: str):
+def remove(domain: str) -> None:
     domains: List[str] = _get_all_domains()
     domains.remove(domain)
-    domains.sort()
-    with open(_FILE_PATH, "rw") as file:
-        file.writelines(domains)
+    domains.sort(key=lambda x: x.lower())
+    with open(_FILE_PATH, "w") as file:
+        file.write("\n".join(domains))
 
 
 
@@ -60,7 +58,7 @@ def _chunk_list(domains: List[X], chunk_size: int = 70) -> Generator[List[X], No
         yield domains[i:i + chunk_size]
 
 
-def export(as_at: datetime = None) -> None:
+def export(as_at: Optional[datetime] = None) -> None:
     domains: List[str] = _get_all_domains()
     if as_at is None:
         as_at = datetime.now()
@@ -69,7 +67,7 @@ def export(as_at: datetime = None) -> None:
         chunked_domains = _chunk_list(domains)
         for i, chunk in enumerate(chunked_domains):
             yield {
-                "title": f"_TITLE {i}",
+                "title": f"{_TITLE} {i}",
                 "id": f"i-dont-want-to-be-recruited-thank-you-very-much-{i}",
                 "updated": as_at,
                 "from": " OR ".join([f"@{x}" for x in chunk])
@@ -77,6 +75,7 @@ def export(as_at: datetime = None) -> None:
 
     payload: Dict[str, Any] = {
         "title": _TITLE,
+        "id": "i-dont-want-to-be-recruited-thank-you-very-much",
         "updated": as_at,
         "author": {
             "name": "Stefano Chiodino",

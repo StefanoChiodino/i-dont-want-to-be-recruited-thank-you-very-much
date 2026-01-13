@@ -1,8 +1,8 @@
 import os
 import re
-from datetime import datetime, date
-from typing import List, Optional, Match, AnyStr
-from unittest import TestCase, mock
+from datetime import datetime
+from typing import List
+from unittest import mock
 from unittest.mock import MagicMock
 
 import pytest
@@ -67,14 +67,14 @@ class TestAdd:
     @mock.patch("builtins.open")
     @mock.patch("main._get_all_domains")
     @pytest.mark.parametrize("start,domain_to_remove,end", [
-        (["email.domain.com"], "email.domain.com", []),
-        (["domain.com"], "domain.com", []),
-        (["domain.com", "email.domain.com"], "email.domain.com", ["domain.com"]),
+        (["email.domain.com"], "email.domain.com", ""),
+        (["domain.com"], "domain.com", ""),
+        (["domain.com", "email.domain.com"], "email.domain.com", "domain.com"),
     ])
-    def test_remove_succesfully(self, _get_all_domains: MagicMock, open_mock: MagicMock, start: List[str], domain_to_remove: str, end: List[str]):
+    def test_remove_succesfully(self, _get_all_domains: MagicMock, open_mock: MagicMock, start: List[str], domain_to_remove: str, end: str):
         _get_all_domains.return_value = start
         main.remove(domain_to_remove)
-        assert open_mock.return_value.__enter__.return_value.writelines.call_args_list[0][0][0] == end
+        assert open_mock.return_value.__enter__.return_value.write.call_args_list[0][0][0] == end
 
     @mock.patch("main._get_all_domains")
     def test_remove_not_existing_throws(self, _get_all_domains: MagicMock):
