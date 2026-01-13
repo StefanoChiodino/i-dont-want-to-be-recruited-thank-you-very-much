@@ -31,22 +31,30 @@ Open an issue on [github](https://github.com/StefanoChiodino/i-dont-want-to-be-r
 - Python 3 installed
 - git installed
 - Understanding of how merge requests work
-- Optional understanding of virtual environments
 
 ### Steps
 
-```
-# install requirements, you may want to be in a virtual environment for this.
-pip3 install -r requirements.txt
-# Add a new domain "domain.com".
-python3 main.py add domain.com
-# Update the xml gmail filter.
-python3 main.py export
-# Commit changes.
+```bash
+# Create and activate a virtual environment
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install requirements
+pip install -r requirements.txt
+
+# Add a new domain "domain.com"
+python main.py add domain.com
+
+# Update the xml gmail filter
+python main.py export
+
+# Commit changes
 git commit -am "added domain.com"
-# Push the changes to your repository.
+
+# Push the changes to your repository
 git push
-# Open a merge request.
+
+# Open a merge request
 ```
 
 # Acknowledgments
